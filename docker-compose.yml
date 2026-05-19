@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  # Future services (Redis, Message Queue, etc.) can be added here.
+  # Database is managed locally via native PostgreSQL + PostGIS.
+
+networks:
+  storefronts_net:
+    driver: bridge

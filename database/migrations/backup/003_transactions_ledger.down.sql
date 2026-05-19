@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS inventory_movements CASCADE;
+DROP TABLE IF EXISTS transaction_items CASCADE;
+DROP TABLE IF EXISTS transactions CASCADE;
