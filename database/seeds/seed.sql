@@ -1,12 +1,13 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -- enable RLS bypass for seeding (superuser or bypassrls role required)
 
 -- Remove: SET session_replication_role = 'replica';
 -- SET session_replication_role = 'replica';
 
 -- Seed stores
-INSERT INTO stores (store_id, name, email, location, timezone, status) VALUES
-('550e8400-e29b-41d4-a716-446655440000', 'Main Store', 'main@store.com', 'POINT(116.4074 39.9042)', 'Asia/Shanghai', 'active'),
-('550e8400-e29b-41d4-a716-446655440001', 'Branch Store', 'branch@store.com', 'POINT(121.4737 31.2304)', 'Asia/Shanghai', 'active');
+INSERT INTO stores (store_id, name, email, location, timezone, status, password_hash) VALUES
+('550e8400-e29b-41d4-a716-446655440000', 'Main Store', 'main@store.com', 'POINT(116.4074 39.9042)', 'Asia/Shanghai', 'active',crypt('AdminPass123!', gen_salt('bf'))),
+('550e8400-e29b-41d4-a716-446655440001', 'Branch Store', 'branch@store.com', 'POINT(121.4737 31.2304)', 'Asia/Shanghai', 'active',crypt('AdminPass123!', gen_salt('bf')));
 
 -- Seed categories
 INSERT INTO categories (category_id, store_id, name) VALUES
@@ -28,3 +29,7 @@ INSERT INTO transaction_items (item_id, transaction_id, product_id, store_id, qu
 
 -- Remove: SET session_replication_role = 'origin';
 -- SET session_replication_role = 'origin';
+
+-- UPDATE stores 
+-- SET password_hash = crypt('AdminPass123!', gen_salt('bf'))
+-- WHERE email ='admin@downtown.store';

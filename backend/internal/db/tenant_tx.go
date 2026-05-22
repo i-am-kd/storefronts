@@ -15,7 +15,7 @@ func BeginTenantTx(ctx context.Context, pool *pgxpool.Pool, tenantID string)(pgx
 		return nil, fmt.Errorf("failed to begin transaction: %w", err)
 	}
 
-	_, err  = tx.Exec(ctx, "SET LOCAL app.tenant_id = $1", tenantID)
+	_, err  = tx.Exec(ctx, fmt.Sprintf( "SET LOCAL app.tenant_id = '%s'", tenantID))
 	if err != nil{
 		tx.Rollback(ctx)
 		return nil, fmt.Errorf("failed to set tenant context: %w", err)

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+vendor/
+*.sum
+*.mod
+
+# Build/Output
+dist/
+build/
+bin/
+*.exe
+
+# Environment & Secrets
+.env
+.env.local
+*.pem
+*.key
+
+# IDE & OS
+.vscode/settings.json
+.idea/
+.DS_Store
+Thumbs.db

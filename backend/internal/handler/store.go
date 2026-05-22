@@ -14,11 +14,21 @@ type StoreHandler struct{
 }
 
 func (h *StoreHandler) GetInventory(c *gin.Context){
-	storeID, _ := c.Get(string(context.StoreIDKey))
+	storeID, exists := c.Get(string(context.StoreIDKey))
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error":"unauthorized: stroe identifier not found"})
+		return
+	}
 
-	tx, err := db.BeginTenantTx(c.Request.Context(), h.Pool, storeID.(string))
+	storeIDstr, ok := storeID.(string)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"error":"invlid store indetifier format "})
+		return
+	}
+
+	tx, err := db.BeginTenantTx(c.Request.Context(), h.Pool, storeIDstr)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error":"failed to initiaize context"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error":"failed to initiaize context", "details": err.Error()})
 		return 
 	}
 	defer tx.Rollback(c.Request.Context())

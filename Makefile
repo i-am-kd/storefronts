@@ -18,6 +18,8 @@ db-migrate:
 db-migrate-down:
 	@echo "⬇️  Rolling back last migration..."
 	@./scripts/migrate.sh down
+	@echo "⬇️  Rolling back last migration..."
+	@./scripts/migrate.sh down
 
 db-reset:
 	@echo "🗑️  Resetting database..."
